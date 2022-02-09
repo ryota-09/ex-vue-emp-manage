@@ -61,9 +61,6 @@
 </template>
 
 <script lang="ts">
-/**
- * 管理者情報を登録する.
- */
 import { Component, Vue } from "vue-property-decorator";
 import axios from "axios";
 
@@ -81,7 +78,7 @@ export default class RegisterAdmin extends Vue {
   private password = "";
 
   /**
-   * WebAPIから管理者情報を登録する.
+   * 管理者情報を登録する.
    */
   async registerAdmin():Promise<void>{
     const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/insert", {
