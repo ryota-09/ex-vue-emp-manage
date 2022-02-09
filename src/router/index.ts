@@ -1,3 +1,6 @@
+/**
+ * 画面遷移を設定するファイル.
+ */
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
@@ -9,6 +12,10 @@ const routes: Array<RouteConfig> = [
   //   path: "*",
   //   component: () => import("../components/LoginAdmin.vue"),
   // },
+  {
+    path: "/registerAdmin",
+    component: () => import("../views/RegisterAdmin.vue"),
+  },
 ];
 
 const router = new VueRouter({
