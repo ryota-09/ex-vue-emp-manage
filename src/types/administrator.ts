@@ -1,8 +1,8 @@
 /**
- * 従業員クラス
+ * 管理者クラス
  * 
  * @remarks
- * 従業員の個々のデータを表す雛形
+ * 管理者を表す雛形
  */
 
 export class Administrator {
