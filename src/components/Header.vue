@@ -7,9 +7,8 @@
             <img class="logo" src="/img/header_logo.png"
           /></a>
         </div>
-
         <div class="header-right">
-          <router-link to="/registerAdmin">管理者登録</router-link> |
+          <router-link to="/registerAdmin">管理者登録</router-link>
           <a href="../../documents/html_mock/login.html">
             <i class="fas fa-sign-in-alt"></i>ログイン
           </a>
@@ -19,7 +18,6 @@
         </div>
       </div>
     </div>
-    <router-view/>
   </header>
 </template>
 

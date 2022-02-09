@@ -1,20 +1,5 @@
 <template>
   <div>
-    <header>
-      <div class="container">
-        <div class="header">
-          <div class="header-left">
-            <a href="login.html">
-              <img class="logo" src="img/header_logo.png" />
-            </a>
-          </div>
-
-          <div class="header-right">
-            <a href="registerAdmin.html">管理者登録</a>
-          </div>
-        </div>
-      </div>
-    </header>
     <div class="top-wrapper">
       <div class="container">
         <div class="row register-page">
@@ -84,12 +69,20 @@ import axios from "axios";
 
 @Component
 export default class RegisterAdmin extends Vue {
+  //エラーメッセージ
   private errorMessage = "エラーメッセージ";
+  //姓
   private lastName = "";
+  //名
   private firstName = "";
+  //メールアドレス
   private mailAddress = "";
+  //パスワード
   private password = "";
 
+  /**
+   * WebAPIから管理者情報を登録する.
+   */
   async registerAdmin():Promise<void>{
     const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/insert", {
       name: this.lastName + " " +  this.firstName,
@@ -99,7 +92,7 @@ export default class RegisterAdmin extends Vue {
     if (res.data === "success"){
       console.log(res);
       this.$router.push("/loginAdmin");
-    } else {
+    } else{
       console.log(res);
       this.errorMessage = res.data.message;
       alert("エラーメッセージ:" + this.errorMessage)
