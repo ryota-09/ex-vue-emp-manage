@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row login-page">
           <div class="col s12 z-depth-6 card-panel">
-            <div class="error">エラーメッセージ</div>
+            <div class="error">{{ errorMessage }}</div>
             <form class="login-form">
               <div class="row"></div>
               <div class="row">
@@ -66,13 +66,14 @@ export default class LoginAdmin extends Vue {
 
   /**
    * ログインをする.
+   * @returns プロミスオブジェクト
    */
   async loginAdmin():Promise<void>{
     const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/login", {
       mailAddress: this.mailAddress,
       password: this.password
     });
-    if (res.data === "success"){
+    if (res.data.status === "success"){
       console.log(res);
       this.$router.push("/employeeList");
     } else{

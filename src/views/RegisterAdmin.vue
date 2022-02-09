@@ -3,21 +3,39 @@
     <div class="top-wrapper">
       <div class="container">
         <div class="row register-page">
-          <div class="error">エラーメッセージ</div>
+          <div class="error">{{ errorMessage }}</div>
           <form class="col s12" id="reg-form">
             <div class="row">
               <div class="input-field col s6">
-                <input id="last_name" type="text" class="validate" v-model="lastName" required />
+                <input
+                  id="last_name"
+                  type="text"
+                  class="validate"
+                  v-model="lastName"
+                  required
+                />
                 <label for="last_name">姓</label>
               </div>
               <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate" v-model="firstName" required />
+                <input
+                  id="first_name"
+                  type="text"
+                  class="validate"
+                  v-model="firstName"
+                  required
+                />
                 <label for="first_name">名</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <input id="email" type="email" class="validate" v-model="mailAddress" required />
+                <input
+                  id="email"
+                  type="email"
+                  class="validate"
+                  v-model="mailAddress"
+                  required
+                />
                 <label for="email">メールアドレス</label>
               </div>
             </div>
@@ -79,27 +97,31 @@ export default class RegisterAdmin extends Vue {
 
   /**
    * 管理者情報を登録する.
+   * @returns プロミスオブジェクト
    */
-  async registerAdmin():Promise<void>{
-    const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/insert", {
-      name: this.lastName + " " +  this.firstName,
-      mailAddress: this.mailAddress,
-      password: this.password
-    });
-    if (res.data === "success"){
+  async registerAdmin(): Promise<void> {
+    const res = await axios.post(
+      "http://153.127.48.168:8080/ex-emp-api/insert",
+      {
+        name: this.lastName + " " + this.firstName,
+        mailAddress: this.mailAddress,
+        password: this.password,
+      }
+    );
+    if (res.data.status === "success") {
       console.log(res);
       this.$router.push("/loginAdmin");
-    } else{
+    } else {
       console.log(res);
       this.errorMessage = res.data.message;
-      alert("エラーメッセージ:" + this.errorMessage)
+      alert("エラーメッセージ:" + this.errorMessage);
     }
   }
 }
 </script>
 
 <style scoped>
-.register-page{
+.register-page {
   width: 600px;
 }
 </style>
