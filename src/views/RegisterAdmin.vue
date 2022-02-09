@@ -77,9 +77,11 @@
 
 <script lang="ts">
 /**
- * 管理者登録機能vueファイル.
+ * 管理者情報を登録する.
  */
 import { Component, Vue } from "vue-property-decorator";
+import axios from "axios";
+
 @Component
 export default class RegisterAdmin extends Vue {
   private errorMessage = "エラーメッセージ";
@@ -87,7 +89,27 @@ export default class RegisterAdmin extends Vue {
   private firstName = "";
   private mailAddress = "";
   private password = "";
+
+  async registerAdmin():Promise<void>{
+    const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/insert", {
+      name: this.lastName + " " +  this.firstName,
+      mailAddress: this.mailAddress,
+      password: this.password
+    });
+    if (res.data === "success"){
+      console.log(res);
+      this.$router.push("/loginAdmin");
+    } else {
+      console.log(res);
+      this.errorMessage = res.data.message;
+      alert("エラーメッセージ:" + this.errorMessage)
+    }
+  }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.register-page{
+  width: 600px;
+}
+</style>
