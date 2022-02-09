@@ -1,10 +1,9 @@
 /**
- * 従業員個々のデータを表すクラス
+ * 従業員個々のデータを表すクラス.
  * 
  * @remarks
  * 従業員個々のデータの雛形を表すクラス
  */
-
 export class Employee {
   constructor(
     //ID
