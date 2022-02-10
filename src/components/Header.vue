@@ -10,9 +10,7 @@
         <div class="header-right">
           <router-link to="/registerAdmin">管理者登録</router-link>
           <router-link to="/loginAdmin"><i class="fas fa-sign-in-alt"></i>ログイン</router-link>
-          <a href="../../documents/html_mock/login.html">
-            <i class="fas fa-sign-in-alt"></i>ログアウト
-          </a>
+          <router-link to="/logoutAdmin"><i class="fas fa-sign-in-alt"></i>ログアウト</router-link>
         </div>
       </div>
     </div>
