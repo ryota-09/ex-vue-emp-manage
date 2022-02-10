@@ -27,6 +27,10 @@ const routes: Array<RouteConfig> = [
   {
     path: "/employeeDetail/:id",
     component: () => import("../views/EmployeeDetail.vue"),
+  },
+  {
+    path: "/logoutAdmin",
+    component: () => import("../views/LogoutAdmin.vue"),
   }
 ];
 
