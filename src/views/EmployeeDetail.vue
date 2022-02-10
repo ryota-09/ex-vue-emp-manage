@@ -3,7 +3,7 @@
     <div class="top-wrapper">
       <div class="container">
         <div class="row">
-          <form action="employeeList.html">
+          <form>
             <fieldset>
               <legend>従業員情報</legend>
               <table>
@@ -16,7 +16,7 @@
                 <tr>
                   <th nowrap>写真</th>
                   <td>
-                    <img v-bind:src="currentEmployeeImage" />
+                    <img v-bind:src="currentEmployeeImage"/>
                   </td>
                 </tr>
                 <tr>
@@ -73,12 +73,13 @@
                   <th nowrap>扶養人数</th>
                   <td>
                     <div class="input-field col s12">
-                      <div class="error">エラーメッセージ</div>
+                      <div class="error">更新できませんでした。({{ }})</div>
                       <input
                         id="dependentsCount"
                         type="text"
                         class="validate"
                         value="3"
+                        v-model="currentDependentsCount"
                         required
                       />
                       <label for="dependentsCount2">扶養人数</label>
@@ -87,7 +88,7 @@
                 </tr>
               </table>
 
-              <button class="btn btn-register waves-effect waves-light">
+              <button class="btn btn-register waves-effect waves-light" v-on:click="update" type="button">
                 更新
               </button>
             </fieldset>
@@ -120,14 +121,33 @@ export default class EmployeeDetail extends Vue {
    * リクエストパラメータから送られてきたIDを使って対象の従業員オブジェクトをセットする.
    * @returns プロミスオブジェクト
    */
-  async created(): Promise<void>{
+   created(): void{
     const employeeId = Number(this.$route.params.id);
     this.currentEmployee = this.$store.getters.getEmployeeByID(employeeId);
+    console.log(this.currentEmployee)
+    console.log(employeeId);
 
-    const res = await axios.get("'http://153.127.48.168:8080/ex-emp-api/img/' + this.currentEmployee.image");
-    this.currentEmployeeImage = res.data;
+    this.currentEmployeeImage = 'http://153.127.48.168:8080/ex-emp-api/img/' + this.currentEmployee.image
 
     this.currentDependentsCount = this.currentEmployee.dependentsCount;
+  }
+  /**
+   * 扶養人数を更新する.
+   * @returns プロミスオブジェクト
+   */
+  async update (): Promise<void>{
+    const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/employee/update",{
+      id: this.currentEmployee.id,
+      dependentsCount: this.currentDependentsCount
+      }
+    );
+    if (res.data.status === "success") {
+      this.$router.push("/employeeList");
+    } else {
+      this.errorMessage = res.data.message;
+      alert("エラーメッセージ:" + this.errorMessage);
+    }
+
   }
 }
 </script>
