@@ -85,7 +85,7 @@ import axios from "axios";
 @Component
 export default class RegisterAdmin extends Vue {
   //エラーメッセージ
-  private errorMessage = "エラーメッセージ";
+  private errorMessage = "";
   //姓
   private lastName = "";
   //名
@@ -100,6 +100,22 @@ export default class RegisterAdmin extends Vue {
    * @returns プロミスオブジェクト
    */
   async registerAdmin(): Promise<void> {
+    if( this.lastName === ""){
+      alert("エラーメッセージ: 性が入力されていません。")
+      return;
+    }
+    if( this.firstName === ""){
+      alert("エラーメッセージ: 名が入力されていません。")
+      return;
+    }
+    if( this.mailAddress === ""){
+      alert("エラーメッセージ: メールアドレスが入力されていません。")
+      return;
+    }
+    if( this.password === ""){
+      alert("エラーメッセージ: パスワードが入力されていません。")
+      return;
+    }
     const res = await axios.post(
       "http://153.127.48.168:8080/ex-emp-api/insert",
       {

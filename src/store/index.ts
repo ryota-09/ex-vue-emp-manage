@@ -16,6 +16,8 @@ export default new Vuex.Store({
     totalEmployeeCount: 0,
     //従業員一覧
     employees: new Array<Employee>(),
+    //ログイン認証
+    isLogedin : false
   }, // end state
   /**
    * 従業員一覧情報をWebAPIから取得してmutationを呼び出す.
@@ -26,8 +28,6 @@ export default new Vuex.Store({
       const response = await axios.get(
         "http://153.127.48.168:8080/ex-emp-api/employee/employees"
       );
-
-      console.dir("response" + JSON.stringify(response));
 
       const payload = response.data;
 
@@ -62,6 +62,9 @@ export default new Vuex.Store({
         );
       }
     },
+    isLogedinHandler(state){
+      state.isLogedin = !state.isLogedin
+    }
   }, // end mutations
   getters: {
     /**
@@ -96,6 +99,9 @@ export default new Vuex.Store({
         return newArray[0];
       };
     },
+    getIsLogedin(state){
+      return state.isLogedin;
+    }
   }, // end getters
   modules: {}, // end modules
 });

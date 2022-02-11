@@ -58,7 +58,7 @@ import axios from "axios";
 @Component
 export default class LoginAdmin extends Vue {
   //エラーメッセージ
-  private errorMessage = "エラーメッセージ";
+  private errorMessage = "";
   //メールアドレス
   private mailAddress = "";
   //パスワード
@@ -74,7 +74,7 @@ export default class LoginAdmin extends Vue {
       password: this.password
     });
     if (res.data.status === "success"){
-      console.log(res);
+      this.$store.commit("isLogedinHandler");
       this.$router.push("/employeeList");
     } else{
       console.log(res);

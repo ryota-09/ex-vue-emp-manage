@@ -73,7 +73,7 @@
                   <th nowrap>扶養人数</th>
                   <td>
                     <div class="input-field col s12">
-                      <div class="error">更新できませんでした。({{ }})</div>
+                      <div class="error">更新できませんでした。({{ errorMessage }})</div>
                       <input
                         id="dependentsCount"
                         type="text"
@@ -111,21 +111,23 @@ export default class EmployeeDetail extends Vue {
   //対象の従業員オブジェクト
   private currentEmployee = new Employee(0, "", "", "", new Date(), "", "", "", "", 0, "", 0);
   //エラーメッセージ
-  private errorMessage = "エラーメッセージ";
+  private errorMessage = "";
   //対象の従業員のimageパス
   private currentEmployeeImage = "";
   //対象の従業員の扶養人数
   private currentDependentsCount = 0;
+  //変更前の扶養人数(入力値チェック用)
+  private previousDependentsCount = 0;
 
   /**
    * リクエストパラメータから送られてきたIDを使って対象の従業員オブジェクトをセットする.
-   * @returns プロミスオブジェクト
+   * 
    */
    created(): void{
     const employeeId = Number(this.$route.params.id);
     this.currentEmployee = this.$store.getters.getEmployeeByID(employeeId);
-    console.log(this.currentEmployee)
-    console.log(employeeId);
+    //入力チェックのために変更前の扶養人数をpreviousDependentsCountに格納しておく。
+    this.previousDependentsCount = this.currentEmployee.dependentsCount;
 
     this.currentEmployeeImage = 'http://153.127.48.168:8080/ex-emp-api/img/' + this.currentEmployee.image
 
@@ -136,6 +138,10 @@ export default class EmployeeDetail extends Vue {
    * @returns プロミスオブジェクト
    */
   async update (): Promise<void>{
+    if ( this.currentDependentsCount === this.previousDependentsCount ){
+      alert("エラーメッセージ: 変更されていません。")
+      return;
+    }
     const res = await axios.post("http://153.127.48.168:8080/ex-emp-api/employee/update",{
       id: this.currentEmployee.id,
       dependentsCount: this.currentDependentsCount

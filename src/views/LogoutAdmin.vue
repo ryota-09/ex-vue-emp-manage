@@ -12,10 +12,12 @@ import axios from "axios";
 export default class LogoutAdmin extends Vue {
   /**
    * ログアウトする.
+   * @returns プロミスオブジェクト
    */
   async created(): Promise<void>{
     const res = await axios.get("http://153.127.48.168:8080/ex-emp-api/logout");
     if (res.data.status === "success") {
+      this.$store.commit("isLogedinHandler");
       this.$router.push("/loginAdmin");
       return;
     }
